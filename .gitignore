@@ -1,0 +1,33 @@
+### Node.js ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### Editor ###
+.history/
+.vscode/
+.idea/
+.DS_Store
+
+### Build ###
+build/
+dist/
+
+### Environment Variables ###
+.env*
+
+### Logs ###
+logs/
+*.log
+
+### Cache ###
+.cache/
+.next/
+
+### Testing ###
+coverage/
+
+### Misc ###
+public/*.hot-update.js
+public/*.hot-update.json
