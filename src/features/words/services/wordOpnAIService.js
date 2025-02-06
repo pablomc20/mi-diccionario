@@ -1,9 +1,6 @@
 export const retrieveSentencesTraduction = async (sentences) => {
     try {
 
-        console.log(JSON.stringify({sentences}));
-        
-
         const response = await fetch(`${process.env.REACT_APP_API_URL}/openai/translate`, {
             method: "POST",
             headers: {

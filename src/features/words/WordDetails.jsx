@@ -8,11 +8,13 @@ import '../../styles/index.css'
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { retrieveSentencesTraduction } from './services/wordOpnAIService';
+import { reloadFavoritesStorge, retrieveFavoritesStorage } from './hooks/favoritesStorage';
 
 const WordDetails = ({ word }) => {
     const [sentenceTraductions, setSentences] = useState([]);
     const [speechRate, setSpeechRate] = useState(1.0); // Valor inicial
     const [visible, setVisible] = useState(false);
+    const [favorites, setFavorites] = useState([]); // Lista de favoritos
     const history = useHistory();
     const { id } = useParams();
 
@@ -22,16 +24,21 @@ const WordDetails = ({ word }) => {
 
     useEffect(() => {
         const examples = word.examples;
-        
+
         const fetchInitialTraductions = async () => {
-            
+
             const sentencesTransalated = await retrieveSentencesTraduction(examples);
             setSentences(sentencesTransalated.translatedSentences)
-        } 
-        
+        }
+
         fetchInitialTraductions();
-        
+
     }, [word.examples]);
+
+    // Cargar los favoritos desde localStorage
+    useEffect(() => {
+        setFavorites(retrieveFavoritesStorage());
+    }, []);
 
     const handleDeleteWord = async (id) => {
 
@@ -55,13 +62,25 @@ const WordDetails = ({ word }) => {
 
     };
 
+    // Función para agregar o quitar de favoritos
+    const toggleFavorite = (wordId) => {
+        
+        let updatedFavorites = reloadFavoritesStorge(wordId);
+        
+        // Actualizamos el estado y sincronizamos con localStorage
+        setFavorites(updatedFavorites);
+    };
+
     const toggleSpeechRate = () => {
         setSpeechRate(prevRate => (prevRate === 1.0 ? 0.6 : 1.0)); // Alternar entre 1.0 y 0.5
     };
 
-    const handleClick = () => {
+    const handleShowTraduction = () => {
         setVisible(!visible);
     };
+
+    // Verificar si la palabra está en favoritos
+    const isFavorite = favorites.includes(id);
 
     return (
 
@@ -78,8 +97,8 @@ const WordDetails = ({ word }) => {
                 </ul>
                 <div className="button-group d-flex justify-content-between mt-4">
                     <button
-                        className="btn btn-outline-info bg-none col-2"
-                        onClick={handleClick}
+                        className={`btn bg-none col-2 ${visible ? "btn-info" : "btn-outline-info " }`}
+                        onClick={handleShowTraduction}
                     >
                         <i className="bi bi-translate"></i>
                     </button>
@@ -95,9 +114,13 @@ const WordDetails = ({ word }) => {
                     <button className="btn btn-outline-success bg-none col-2">
                         <i className="bi bi-alphabet"></i>
                     </button>
-                    <button className="btn btn-outline-danger bg-none col-2">
+                    <button
+                        className={`btn bg-none col-2 ${isFavorite ? "btn-danger" : "btn-outline-danger"}`}
+                        onClick={() => toggleFavorite(id)}
+                    >
                         <i className="bi bi-heart-fill"></i>
                     </button>
+                    
                 </div>
 
                 {/* SI esta autorizado mostrar botones */}
