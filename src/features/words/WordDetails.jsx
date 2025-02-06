@@ -5,17 +5,33 @@ import { deleteWord } from './services/wordService';
 import ConfirmDialog from "../../shared/components/ConfirmDialog";
 import '../../styles/index.css'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { retrieveSentencesTraduction } from './services/wordOpnAIService';
 
 const WordDetails = ({ word }) => {
+    const [sentenceTraductions, setSentences] = useState([]);
     const [speechRate, setSpeechRate] = useState(1.0); // Valor inicial
+    const [visible, setVisible] = useState(false);
     const history = useHistory();
     const { id } = useParams();
 
     const editWord = (id) => {
         history.push(`/edit/${id}`);
     };
+
+    useEffect(() => {
+        const examples = word.examples;
+        
+        const fetchInitialTraductions = async () => {
+            
+            const sentencesTransalated = await retrieveSentencesTraduction(examples);
+            setSentences(sentencesTransalated.translatedSentences)
+        } 
+        
+        fetchInitialTraductions();
+        
+    }, [word.examples]);
 
     const handleDeleteWord = async (id) => {
 
@@ -43,6 +59,10 @@ const WordDetails = ({ word }) => {
         setSpeechRate(prevRate => (prevRate === 1.0 ? 0.6 : 1.0)); // Alternar entre 1.0 y 0.5
     };
 
+    const handleClick = () => {
+        setVisible(!visible);
+    };
+
     return (
 
         <div className="card shadow-lg flex-grow-1">
@@ -53,27 +73,30 @@ const WordDetails = ({ word }) => {
                 </div>
                 <ul className="mt-4">
                     {word.examples.map((example, index) => (
-                        <TextReaderInput key={index} text={example} speechRate={speechRate} />
+                        <TextReaderInput key={index} text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />
                     ))}
                 </ul>
                 <div className="button-group d-flex justify-content-between mt-4">
-                    <button className="btn btn-outline-info bg-none col-2">
-                        <i class="bi bi-translate"></i>
+                    <button
+                        className="btn btn-outline-info bg-none col-2"
+                        onClick={handleClick}
+                    >
+                        <i className="bi bi-translate"></i>
                     </button>
                     <button
                         className={`btn ${speechRate === 1.0 ? "btn-outline-warning" : "btn-warning"} bg-none col-2`}
                         onClick={toggleSpeechRate}
                     >
-                        <i class="bi-alarm"></i>
+                        <i className="bi-alarm"></i>
                     </button>
                     <button className="btn btn-primary bg-none col-3" onClick={() => window.location.href = '/pronunciations'}>
-                        <i class="bi bi-list-ol"></i>
+                        <i className="bi bi-list-ol"></i>
                     </button>
                     <button className="btn btn-outline-success bg-none col-2">
-                        <i class="bi bi-alphabet"></i>
+                        <i className="bi bi-alphabet"></i>
                     </button>
                     <button className="btn btn-outline-danger bg-none col-2">
-                        <i class="bi bi-heart-fill"></i>
+                        <i className="bi bi-heart-fill"></i>
                     </button>
                 </div>
 

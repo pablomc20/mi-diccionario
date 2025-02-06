@@ -34,7 +34,7 @@ const EditWord = () => {
     // Manejar cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         setFormData((prevWord) => ({
             ...prevWord,
             [name]: value,
@@ -117,7 +117,14 @@ const EditWord = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="examples" className="form-label">Ejemplos (separados por comas)</label>
-                    <textarea rows={3} class="form-control" name="examples" value={formData.examples} onChange={handleExamplesChange} />
+                    <textarea
+                        rows={3}
+                        className="form-control"
+                        name="examples"
+                        value={formData.examples}
+                        onChange={handleExamplesChange}
+                        required
+                    />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="pronunciation" className="form-label">Pronunciación</label>
@@ -148,8 +155,8 @@ const EditWord = () => {
                     <button className="btn btn-outline-secondary" onClick={() => history.push(`/word/${id}`)}>
                         <i className="bi bi-arrow-return-left"></i>
                     </button>
-                    <button type="submit" className="btn btn-outline-primary"> 
-                        <i className="bi bi-floppy-fill"></i> 
+                    <button type="submit" className="btn btn-outline-primary">
+                        <i className="bi bi-floppy-fill"></i>
                     </button>
                 </div>
             </form>

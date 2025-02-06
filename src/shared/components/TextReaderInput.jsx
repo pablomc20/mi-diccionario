@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TextReaderInput = ({ text, speechRate }) => {
+const TextReaderInput = ({ text, speechRate, visible, sentence }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
 
     const speakText = async () => {
@@ -43,6 +43,15 @@ const TextReaderInput = ({ text, speechRate }) => {
                     {isSpeaking ? "  🔊" : "  🔈"}
                 </i>
             </span>
+
+            {/* Visualizar cuando se hace clic desde el padre */}
+            <section style={{
+                display: visible ? "block" : "none",
+                paddingLeft: "1rem"
+            }}
+            >
+                <p className="text-info">{sentence}</p>
+            </section>
         </li>
     );
 };
