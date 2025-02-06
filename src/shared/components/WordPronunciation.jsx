@@ -1,4 +1,4 @@
-import { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import { useRef } from "react";
 import AudioPlayer from './AudioPlayer';
 
 const WordPronunciation = ({wordObject}) => {

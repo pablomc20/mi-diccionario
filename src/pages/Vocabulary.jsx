@@ -32,7 +32,7 @@ const Vocabulary = () => {
   };
 
   return (
-    <div className="container vh-100 bg-info">
+    <div className="container vh-100">
       <h1 className="text-center mt-2">Vocabulario</h1>
       <CreateWordForm onAddWord={addWord} />
       <WordList words={words} onDeleteWord={handleDeleteWord} />
