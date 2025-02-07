@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import AudioPlayer from './AudioPlayer';
+import AudioPlayer from "../../shared/components/AudioPlayer";
 
 const WordPronunciation = ({wordObject}) => {
     const audioPlayerRef = useRef(null);

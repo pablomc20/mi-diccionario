@@ -9,7 +9,7 @@ function Menu() {
 
             <ThemeToggle />
 
-            <Link to="/vocabulary" className="btn btn-outline-info mt-4">
+            <Link to="/vocabulary" className="btn btn-outline-primary mt-4">
                 Ver vocabulario
             </Link>
         </div>

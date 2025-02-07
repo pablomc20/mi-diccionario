@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getNewWordId } from '../features/words/hooks/wordLocalStorage';
 import { readById } from '../features/words/services/wordService';
-import WordPronunciation from '../shared/components/WordPronunciation'
+import WordPronunciation from '../features/words/WordPronunciation';
 import WordDetails from '../features/words/WordDetails';
 
 const SectionPractice = () => {
