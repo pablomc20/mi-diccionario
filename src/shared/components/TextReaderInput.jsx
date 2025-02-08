@@ -27,7 +27,7 @@ const TextReaderInput = ({ text, speechRate, visible, sentence }) => {
     };
 
     return (
-        <li className="mb-3">
+        <div className="mb-3">
             <span
                 className="form-control"
                 style={{
@@ -52,7 +52,7 @@ const TextReaderInput = ({ text, speechRate, visible, sentence }) => {
             >
                 <p className="text-info">{sentence}</p>
             </section>
-        </li>
+        </div>
     );
 };
 

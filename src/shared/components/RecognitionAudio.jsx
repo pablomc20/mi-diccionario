@@ -13,7 +13,7 @@ const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, se
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             alert("getUserMedia no es compatible en este navegador.");
         }
-        
+
         navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
             const mediaRecorder = new MediaRecorder(stream);
             mediaRecorderRef.current = mediaRecorder;
@@ -33,14 +33,24 @@ const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, se
         });
     };
 
-    const stopRecording = () => {
+    const stopProcesses = () => {
+        // Detener SpeechRecognition si existe y limpiar la referencia
         if (recognitionRef.current) {
-            recognitionRef.current.stop(); // Detiene SpeechRecognition primero
+            try {
+                recognitionRef.current.onresult = null;
+                recognitionRef.current.onend = null;
+                recognitionRef.current.onerror = null;
+                recognitionRef.current.stop();
+            } catch (e) {
+                console.error("Error al detener el reconocimiento:", e);
+            }
+            recognitionRef.current = null;
         }
-
+        // Detener MediaRecorder si existe y aún activo
         if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
             mediaRecorderRef.current.stop();
         }
+        setIsListening(false);
     };
 
     const toggleListening = () => {
@@ -55,34 +65,53 @@ const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, se
 
         toggleListening();
 
-        recognitionRef.current = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        // Crear una nueva instancia de SpeechRecognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognitionRef.current = new SpeechRecognition();
         const recognition = recognitionRef.current;
-        recognition.continuous = false;
+
+        // Configuramos para transcripción continua e interina
+        recognition.continuous = true;
+        recognition.interimResults = true;
         recognition.lang = "en-US";
+
+        // Reiniciamos el texto reconocido
+        setRecognizedText("");
 
         recognition.start();
         startRecording();
 
         recognition.onresult = (event) => {
-            const rawText = event.results[0][0].transcript;
-            const recognizedClean = cleanText(rawText);
-            const originalClean = cleanText(originalPhrase);
+            let finalTranscript = "";
+            let interimTranscript = "";
 
-            setRecognizedText(rawText);
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript + " ";
+                } else {
+                    interimTranscript += transcript;
+                }
+            }
 
-            const accuracy = calculateAcurracyTranscript(rawText, originalPhrase);
-            setSimilarity(accuracy);
-            setHighlightedText(diffWords(originalClean, recognizedClean));
+            // Actualiza la transcripción combinando los resultados finales e interinos
+            setRecognizedText(finalTranscript + interimTranscript);
+
+            // Calcula la precisión solo si hay resultados finales
+            if (finalTranscript.trim().length > 0) {
+                const accuracy = calculateAcurracyTranscript(finalTranscript, originalPhrase);
+                setSimilarity(accuracy);
+                setHighlightedText(diffWords(cleanText(originalPhrase), cleanText(finalTranscript)));
+                stopProcesses();
+            }
         };
 
         recognition.onend = () => {
-            stopRecording(); // Llama a la nueva versión de stopRecording
-            setTimeout(() => setIsListening(false), 500); // Pequeño delay para evitar el error "aborted"
+            setTimeout(() => setIsListening(false), 500);
         };
 
         recognition.onerror = (event) => {
-            console.error("Error en el reconocimiento de voz:", event.error);
-            setIsListening(false);
+            stopProcesses();
         };
     };
 

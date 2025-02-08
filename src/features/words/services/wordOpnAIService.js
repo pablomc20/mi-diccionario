@@ -18,6 +18,38 @@ export const retrieveSentencesTraduction = async (sentences) => {
     }
 };
 
+const levenshteinDistance = (a, b) => {
+    const n = a.length;
+    const m = b.length;
+
+    // Creamos una matriz de dimensiones (n+1) x (m+1)
+    const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+
+    // Inicializamos la primera fila y columna
+    for (let i = 0; i <= n; i++) {
+        dp[i][0] = i;
+    }
+    for (let j = 0; j <= m; j++) {
+        dp[0][j] = j;
+    }
+
+    // Rellenamos la matriz
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= m; j++) {
+            if (a[i - 1] === b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = Math.min(
+                    dp[i - 1][j] + 1,      // eliminación
+                    dp[i][j - 1] + 1,      // inserción
+                    dp[i - 1][j - 1] + 1   // sustitución
+                );
+            }
+        }
+    }
+    return dp[n][m];
+};
+
 export const calculateAcurracyTranscript = (rawText, originalPhrase) => {
     const recognizedClean = cleanText(rawText);
     const originalClean = cleanText(originalPhrase);
@@ -25,16 +57,11 @@ export const calculateAcurracyTranscript = (rawText, originalPhrase) => {
     const originalWords = originalClean.split(" ");
     const recognizedWords = recognizedClean.split(" ");
 
-    let correctWords = 0;
-    let totalWords = originalWords.length;
+    const distance = levenshteinDistance(originalWords, recognizedWords);
 
-    for (let i = 0; i < totalWords; i++) {
-        if (recognizedWords[i] === originalWords[i]) {
-            correctWords++;
-        }
-    }
-
-    return Math.round((correctWords / totalWords) * 100);
+    // Calculamos la precisión: se asume que la precisión es 1 - (errores / total de palabras originales)
+    const accuracy = Math.max(0, Math.round((1 - distance / originalWords.length) * 100));
+    return accuracy;
 
 }
 

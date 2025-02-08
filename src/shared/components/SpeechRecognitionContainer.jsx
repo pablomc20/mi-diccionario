@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RecognitionAudio from "./RecognitionAudio";
 import ListeningAudio from "./ListeningAudio";
+import TextReaderInput from "./TextReaderInput";
 
 const SpeechRecognitionContainer = ({ originalPhrase, onSimilarityChange }) => {
     // Properties Recognition & Listening
@@ -45,9 +46,10 @@ const SpeechRecognitionContainer = ({ originalPhrase, onSimilarityChange }) => {
         <div className="card mb-3" style={{
             minHeight: "50vh"
         }}>
-            <div className="card-header">
+            <div className="px-3">
                 <h5 className="card-title">Original Phrase:</h5>
-                <p className="card-text text-muted">{originalPhrase}</p>
+                {/* <p className="card-text text-muted">{originalPhrase}</p> */}
+                <TextReaderInput key={1} text={originalPhrase} speechRate={1.0} visible={undefined} sentence={""} />
             </div>
             <div className="card-body">
                 <div className="mb-3">

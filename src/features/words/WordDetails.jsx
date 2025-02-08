@@ -107,7 +107,9 @@ const WordDetails = ({ word }) => {
                 </div>
                 <ul className="mt-4">
                     {word.examples.map((example, index) => (
-                        <TextReaderInput key={index} text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />
+                        <li>
+                            <TextReaderInput key={index} text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />
+                        </li>
                     ))}
                 </ul>
                 <div className="button-group d-flex justify-content-between mt-4">

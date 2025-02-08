@@ -19,7 +19,7 @@ const ListeningAudio = ({ audioURL }) => {
             onClick={playAudio}
             disabled={!audioURL || isAudioPlaying}
         >
-            {isAudioPlaying ? <i class="bi bi-soundwave"></i> : <i class="bi bi-play-fill"></i> }
+            {isAudioPlaying ? <i className="bi bi-soundwave"></i> : <i className="bi bi-play-fill"></i> }
         </button>
     );
 
