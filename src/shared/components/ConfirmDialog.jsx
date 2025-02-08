@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const ConfirmDialog = async ({ title, text, onConfirm }) => {
+const ConfirmDialog = async ({ title, text, onConfirm, confirmButtonText }) => {
   const result = await Swal.fire({
     title: title || "¿Estás seguro?",
     text: text || "¡No podrás revertir esto!",
@@ -8,7 +8,7 @@ const ConfirmDialog = async ({ title, text, onConfirm }) => {
     showCancelButton: true,
     confirmButtonColor: "#d33",
     cancelButtonColor: "#3085d6",
-    confirmButtonText: "Sí, eliminarla!",
+    confirmButtonText: confirmButtonText || "Sí, eliminarla!",
     cancelButtonText: "Cancelar",
   });
 

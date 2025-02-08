@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2'; // Importar sweetalert2
 import 'react-toastify/dist/ReactToastify.css'; // Importar los estilos
+import useLocalStorage from './hooks/useLocalStorage';
 import TextReaderInput from '../../shared/components/TextReaderInput';
 import { deleteWord } from './services/wordService';
 import ConfirmDialog from "../../shared/components/ConfirmDialog";
@@ -15,6 +16,7 @@ const WordDetails = ({ word }) => {
     const [speechRate, setSpeechRate] = useState(1.0); // Valor inicial
     const [visible, setVisible] = useState(false);
     const [favorites, setFavorites] = useState([]); // Lista de favoritos
+    const [sentencesPractice, setSentencesPractice, removeSentencesPractice] = useLocalStorage('sentences', [])
     const history = useHistory();
     const { id } = useParams();
 
@@ -64,9 +66,9 @@ const WordDetails = ({ word }) => {
 
     // Función para agregar o quitar de favoritos
     const toggleFavorite = (wordId) => {
-        
+
         let updatedFavorites = reloadFavoritesStorge(wordId);
-        
+
         // Actualizamos el estado y sincronizamos con localStorage
         setFavorites(updatedFavorites);
     };
@@ -78,6 +80,19 @@ const WordDetails = ({ word }) => {
     const handleShowTraduction = () => {
         setVisible(!visible);
     };
+
+    const handleRedirectPractice = () => {
+        const newSentences = [];
+
+        word.examples.forEach(newSentence => {
+            console.log(newSentence);
+            newSentences.push(newSentence); // Agregar nuevas sentencias al arreglo
+        });
+
+        setSentencesPractice(newSentences); // Actualizar el estado una sola vez
+
+        window.location.href = `/recognition?nameWord=${word.word}`;
+    }
 
     // Verificar si la palabra está en favoritos
     const isFavorite = favorites.includes(id);
@@ -97,7 +112,7 @@ const WordDetails = ({ word }) => {
                 </ul>
                 <div className="button-group d-flex justify-content-between mt-4">
                     <button
-                        className={`btn bg-none col-2 ${visible ? "btn-info" : "btn-outline-info " }`}
+                        className={`btn bg-none col-2 ${visible ? "btn-info" : "btn-outline-info "}`}
                         onClick={handleShowTraduction}
                     >
                         <i className="bi bi-translate"></i>
@@ -108,7 +123,12 @@ const WordDetails = ({ word }) => {
                     >
                         <i className="bi-alarm"></i>
                     </button>
-                    <button className="btn btn-primary bg-none col-3" onClick={() => window.location.href = '/pronunciations'}>
+                    <button
+                        className="btn btn-primary bg-none col-3"
+                        onClick={() => {
+                            handleRedirectPractice();
+                        }}
+                    >
                         <i className="bi bi-list-ol"></i>
                     </button>
                     <button className="btn btn-outline-success bg-none col-2">
@@ -120,7 +140,7 @@ const WordDetails = ({ word }) => {
                     >
                         <i className="bi bi-heart-fill"></i>
                     </button>
-                    
+
                 </div>
 
                 {/* SI esta autorizado mostrar botones */}
@@ -129,7 +149,7 @@ const WordDetails = ({ word }) => {
                         <button onClick={() => editWord(id)} className="btn btn-outline-primary col-2">
                             <i className="bi bi-gear-fill"></i>
                         </button>
-                        <button onClick={handleDeleteWord(id)} className="btn btn-outline-danger col-2">
+                        <button onClick={() => handleDeleteWord(id)} className="btn btn-outline-danger col-2">
                             <i className="bi bi-trash-fill"></i>
                         </button>
                     </div>

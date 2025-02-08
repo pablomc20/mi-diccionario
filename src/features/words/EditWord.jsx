@@ -24,7 +24,7 @@ const EditWord = () => {
             if (formData) {
                 setFormData({
                     ...formData,
-                    examples: formData.examples ? JSON.parse(formData.examples).join("\n") : ''
+                    examples: formData.examples ? formData.examples.join("\n") : ''
                 });
             }
         };

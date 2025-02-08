@@ -72,6 +72,7 @@ export const readById = async (id) => {
             throw new Error('Error al obtener los detalles de la palabra' + url);
         }
         const data = await response.json();
+        
         return data; // Devuelve los detalles de la palabra
     } catch (error) {
         console.error('Error en readById:', error);

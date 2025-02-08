@@ -95,22 +95,84 @@ button {
 }
 
 .padre {
-    position: relative; /* Establece el contexto de posición */
+    position: relative;
+    /* Establece el contexto de posición */
     width: 100%;
     background-color: lightblue;
 }
 
 .hijo {
-    position: absolute; /* Se posiciona en relación al padre */
+    position: absolute;
+    /* Se posiciona en relación al padre */
     bottom: 10px;
     right: 10px;
     background-color: red;
     padding: 10px;
 }
+
 .pronunciation {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.6rem;
     margin-bottom: 20px;
+}
+
+
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Estilos personalizados del tooltip */
+.btn-tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-tooltip::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 100%;
+    left: 110%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.btn-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Flecha del tooltip */
+.btn-tooltip::before {
+    content: "";
+    position: absolute;
+    bottom: 82%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.btn-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-backdrop {
+    background-size: 50% 50%;
+    /* Ajusta el tamaño del GIF */
+    background-position: center;
+    /* Centra el GIF */
 }
