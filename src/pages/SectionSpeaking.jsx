@@ -5,6 +5,7 @@ import { useState } from "react";
 import useLocalStorage from '../features/words/hooks/useLocalStorage';
 import useIsMobile from '../features/hooks/useIsMobile';
 import ConfirmDialog from '../shared/components/ConfirmDialog';
+import PaginationButtons from '../shared/components/PaginationButtons';
 
 const SectionSpeaking = () => {
     const location = useLocation();
@@ -78,38 +79,23 @@ const SectionSpeaking = () => {
 
     return (
         <div className="container vh-100 d-flex flex-column justify-content-center p-4">
-            {/* Indicador de progreso con cambio de color */}
-            <h3 className={`mb-4 text-center`}>
-                {nameWord}
-                {/*  {score}% - {porcentaje} {currentIndex} {sentencesStorage.length} */}
-            </h3>
+            <h3 className={`mb-4 text-center`}>{nameWord}</h3>
 
-            {/* Contenedor de la frase actual */}
-            <div className="overflow-hidden">
-                <div className="transition-transform duration-300">
-                    {sentencesStorage.slice(currentIndex, currentIndex + 1).map((item, index) => (
-                        <SpeechRecognitionContainer
-                            key={index}
-                            originalPhrase={item}
-                            onSimilarityChange={handleSimilarityChange} // Pasamos la función al hijo
-                        />
-                    ))}
-                </div>
-            </div>
+            {/* Contenedor de las frases */}
+            {sentencesStorage.slice(currentIndex, currentIndex + 1).map((item, index) => (
+                <SpeechRecognitionContainer
+                    key={index}
+                    originalPhrase={item}
+                    onSimilarityChange={handleSimilarityChange} // Pasamos la función al hijo
+                />
+            ))}
 
             {/* Paginación con botones */}
-            {sentencesStorage.length > 1 && (
-                <div className="d-flex justify-content-center mt-4">
-                    {sentencesStorage.map((_, index) => (
-                        <button
-                            key={index}
-                            className={`btn btn-sm rounded-circle mx-2 ${index === currentIndex ? "btn-primary" : "btn-secondary"}`}
-                            style={{ width: "12px", height: "12px", padding: 0 }}
-                            // onClick={() => setCurrentIndex(index)}
-                        />
-                    ))}
-                </div>
-            )}
+            <PaginationButtons
+                sentencesCount={sentencesStorage.length}
+                currentIndex={currentIndex}
+                onChangeIndex={setCurrentIndex}
+            />
 
             {/* Botones de "Anterior" y "Siguiente" debajo del contenedor de la frase */}
             <div className="d-flex justify-content-between w-100 mt-4">

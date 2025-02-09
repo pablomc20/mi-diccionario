@@ -1,11 +1,11 @@
-import { readWordsGrupedByIds } from '../services/wordService';
+import { readWordsGroupedByIds } from '../services/wordService';
 
 export const getNewWordId = async () => {
     let words = JSON.parse(localStorage.getItem("words"));
 
     if (!Array.isArray(words)) {
         // Obtener palabras agrupadas por ID si no existen en localStorage
-        words = await readWordsGrupedByIds();
+        words = await readWordsGroupedByIds();
         localStorage.setItem("words", JSON.stringify(words));
     }
 

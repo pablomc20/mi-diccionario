@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { diffWords } from "diff";
-import { calculateAcurracyTranscript, cleanText } from "../../features/words/services/wordOpnAIService";
+import { calculateAcurracyTranscript, cleanText } from "../utils/wordRecognitionUtil";
 
 const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, setHighlightedText, setAudioURL }) => {
     const [isListening, setIsListening] = useState(false);

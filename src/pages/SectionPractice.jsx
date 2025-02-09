@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getNewWordId } from '../features/words/hooks/wordLocalStorage';
-import { readById } from '../features/words/services/wordService';
 import WordPronunciation from '../features/words/WordPronunciation';
 import WordDetails from '../features/words/WordDetails';
 import useWordDetails from '../features/words/hooks/useWordDetails';

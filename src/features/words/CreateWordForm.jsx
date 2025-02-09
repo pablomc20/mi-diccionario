@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { buildDataWord, retrievPronunciation } from './services/wordOpnAIService';
 
 const CreateWordForm = ({ onAddWord }) => {
-  const API_HOST = "http://192.168.0.93:3001"
   const [word, setWord] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Generar ejemplos con Gemini
-    const response = await buildDataWord(word);
+    const response = await generateDataWord(word);
 
     const audio = await getPronunciation(word);
-    const audioUrl = buildUrlAudio(audio.audio);
+    const audioUrl = audio ? buildUrlAudio(audio.audio) : '';
 
     const wordData = {
       english: word,
@@ -23,8 +23,8 @@ const CreateWordForm = ({ onAddWord }) => {
       audioUrl: audioUrl
     };
 
-    await onAddWord(wordData); // Llama a la función para agregar la palabra
-    setWord(""); // Limpia el input después de enviar
+    await onAddWord(wordData);
+    setWord("");
 
   };
 
@@ -35,29 +35,12 @@ const CreateWordForm = ({ onAddWord }) => {
     return `${audio.charAt(0)}/${audio}`;
   }
 
-  const getFirstWord = (text) => {
-    const words = text.split(' ');
-    return words[0];
-  }
   const getPronunciation = async (word) => {
-    const response = await fetch(`${API_HOST}/openai/pronunciations/${getFirstWord(word)}`);
-    const data = await response.json();
-
-    if (data.error) {
-      console.error(data.error);
-    } else {
-      return data[0];
-    }
+    return await retrievPronunciation(word);
   }
 
-  const buildDataWord = async (word) => {
-    try {
-      const response = await fetch(`${API_HOST}/openai/vocabulary/${word}`);
-      return await response.json();
-    } catch (error) {
-      console.error('Error en fetchWords:', error);
-      return []; // Devuelve un array vacío en caso de error
-    }
+  const generateDataWord = async (word) => {
+    return await buildDataWord(word);
   }
 
   return (

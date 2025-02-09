@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@mui/icons-material": "^6.4.2",
+        "axios": "^1.7.9",
         "bootstrap": "^5.3.3",
         "diff": "^7.0.0",
         "elevenlabs": "^1.50.4",
