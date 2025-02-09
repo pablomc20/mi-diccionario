@@ -1,15 +1,18 @@
+import { Button, Container } from "react-bootstrap";
+
 const PaginationButtons = ({ sentencesCount, currentIndex, onChangeIndex }) => {
     return (
-        <div className="d-flex justify-content-center mt-4">
+        <Container className="d-flex justify-content-center mt-4 p-0">
             {Array.from({ length: sentencesCount }).map((_, index) => (
-                <button
+                <Button
                     key={index}
-                    className={`btn btn-sm rounded-circle mx-2 ${index === currentIndex ? "btn-primary" : "btn-secondary"}`}
+                    className={'rounded-circle mx-2'}
+                    variant={`${index === currentIndex ? "primary" : "secondary"}`}
                     style={{ width: "12px", height: "12px", padding: 0 }}
                     onClick={() => onChangeIndex(index)}
                 />
             ))}
-        </div>
+        </Container>
     );
 };
 

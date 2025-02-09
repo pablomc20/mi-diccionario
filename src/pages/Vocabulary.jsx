@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CreateWordForm from '../features/words/CreateWordForm';
 import { readWords, createWord, deleteWord } from '../features/words/services/wordService';
 import WordList from '../features/words/WordList';
+import { Container } from 'react-bootstrap';
 
 const Vocabulary = () => {
   const [words, setWords] = useState([]);
@@ -31,11 +32,11 @@ const Vocabulary = () => {
   };
 
   return (
-    <div className="container vh-100">
+    <Container className="vh-100 p-0">
       <h1 className="text-center mt-2">Vocabulario</h1>
       <CreateWordForm onAddWord={addWord} />
       <WordList words={words} onDeleteWord={handleDeleteWord} />
-    </div>
+    </Container>
   );
 };
 

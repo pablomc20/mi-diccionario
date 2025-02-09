@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 
 const ListeningAudio = ({ audioURL }) => {
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -14,13 +15,14 @@ const ListeningAudio = ({ audioURL }) => {
     };
 
     return (
-        <button data-title="Reproducir audio"
-            className="btn btn-secondary btn-tooltip p-3"
+        <Button data-title="Reproducir audio"
+            className="btn-tooltip p-3"
+            variant="secondary"
             onClick={playAudio}
             disabled={!audioURL || isAudioPlaying}
         >
             {isAudioPlaying ? <i className="bi bi-soundwave"></i> : <i className="bi bi-play-fill"></i> }
-        </button>
+        </Button>
     );
 
 };

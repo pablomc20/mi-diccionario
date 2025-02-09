@@ -145,7 +145,7 @@ const WordDetails = ({ word }) => {
                 </div>
 
                 {/* SI esta autorizado mostrar botones */}
-                {false &&
+                {true &&
                     <div className='d-flex justify-content-end '>
                         <button onClick={() => editWord(id)} className="btn btn-outline-primary col-2">
                             <i className="bi bi-gear-fill"></i>

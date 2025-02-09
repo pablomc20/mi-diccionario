@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'; // Importar sweetalert2
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import { Card, Button, Container } from "react-bootstrap";
 import ConfirmDialog from "../../shared/components/ConfirmDialog";
 
 const WordList = ({ words, onDeleteWord }) => {
@@ -24,39 +25,40 @@ const WordList = ({ words, onDeleteWord }) => {
 
     // Renderizar la lista de palabras
     return (
-        <div id="wordList">
+        <Container id="wordList" className='p-0'>
             {words.length === 0 ? (
-                <p>No hay palabras de.</p>
+                <p>No hay palabras.</p>
             ) : (
                 words.map((word) => (
-                    <div key={word.id} className="card mb-3" id={word.id}>
-                        <div className="card-body">
-                            <h5 className="card-title">
+                    <Card key={word.id} className="mb-3" id={word.id}>
+                        <Card.Body>
+                            <Card.Title>
                                 {word.english} → {word.spanish}
-                            </h5>
-                            <h6 className="card-subtitle mb-2 text-muted text-capitalize">
+                            </Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted text-capitalize">
                                 {word.category}
-                            </h6>
-                            <p className="card-text">{word.concept}</p>
+                            </Card.Subtitle>
+                            <Card.Text>{word.concept}</Card.Text>
                             <div className="d-flex justify-content-end">
-                                <button
-                                    className="btn text-primary border border-primary me-2"
+                                <Button
+                                    variant="outline-primary"
+                                    className="me-2"
                                     onClick={() => handleViewDetails(word.id)}
                                 >
                                     <i className="bi bi-eye-fill"></i>
-                                </button>
-                                <button
-                                    className="btn text-danger border border-danger"
+                                </Button>
+                                <Button
+                                    variant="outline-danger"
                                     onClick={() => handleDelete(word.id)}
                                 >
                                     <i className="bi bi-trash-fill"></i>
-                                </button>
+                                </Button>
                             </div>
-                        </div>
-                    </div>
+                        </Card.Body>
+                    </Card>
                 ))
             )}
-        </div>
+        </Container>
     );
 };
 

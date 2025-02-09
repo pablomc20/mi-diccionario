@@ -1,12 +1,13 @@
 import { useTheme } from "./ThemeContext";
+import { Button } from "react-bootstrap";
 
 const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
-        <button className="btn btn-outline-success" onClick={toggleTheme}>
+        <Button variant="outline-success" onClick={toggleTheme}>
             {theme === "light" ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
-        </button>
+        </Button>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { diffWords } from "diff";
 import { calculateAcurracyTranscript, cleanText } from "../utils/wordRecognitionUtil";
+import { Button } from "react-bootstrap";
 
 const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, setHighlightedText, setAudioURL }) => {
     const [isListening, setIsListening] = useState(false);
@@ -116,12 +117,13 @@ const RecognitionAudio = ({ originalPhrase, setRecognizedText, setSimilarity, se
     };
 
     return (
-        <button data-title="Iniciar grabación"
-            className={`btn ${isListening ? "btn-danger" : "btn-light"} p-3 btn-tooltip`}
+        <Button data-title="Iniciar grabación"
+            className={'p-3 btn-tooltip'}
+            variant={`${isListening ? "danger" : "light"}`}
             onClick={startRecognition}
         >
             {isListening ? <i className="bi bi-stop-fill"></i> : <i className="bi bi-mic-fill"></i>}
-        </button>
+        </Button>
     );
 };
 

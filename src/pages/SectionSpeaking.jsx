@@ -6,6 +6,7 @@ import useLocalStorage from '../features/words/hooks/useLocalStorage';
 import useIsMobile from '../features/hooks/useIsMobile';
 import ConfirmDialog from '../shared/components/ConfirmDialog';
 import PaginationButtons from '../shared/components/PaginationButtons';
+import { Button, Container } from 'react-bootstrap';
 
 const SectionSpeaking = () => {
     const location = useLocation();
@@ -75,8 +76,8 @@ const SectionSpeaking = () => {
     };
 
     return (
-        <div className="container vh-100 d-flex flex-column justify-content-center p-4">
-            <h3 className={`mb-4 text-center`}>{nameWord}</h3>
+        <Container className="vh-100 d-flex flex-column justify-content-center p-4">
+            <h3 className={`text-center mb-4`}>{nameWord}</h3>
 
             {/* Contenedor de las frases */}
             {sentencesStorage.slice(currentIndex, currentIndex + 1).map((item, index) => (
@@ -95,27 +96,30 @@ const SectionSpeaking = () => {
             />
 
             {/* Botones de "Anterior" y "Siguiente" debajo del contenedor de la frase */}
-            <div className="d-flex justify-content-between w-100 mt-4">
-                <button
-                    className="btn btn-outline-secondary p-3"
+            <section className="d-flex justify-content-between w-100 mt-4">
+                <Button
+                    className='p-3'
+                    variant="outline-secondary"
                     onClick={() => handleCencelPractice()}
                 >
                     <i className="bi bi-arrow-return-left"></i> {isMobile ? '' : 'Cancel'}
-                </button>
+                </Button>
 
                 {currentIndex === sentencesStorage.length - 1 && porcentaje !== 0 && (
-                    <button
-                        className={`btn btn-success mp-3`}
+                    <Button
+                        className={'mp-3'}
+                        variant='success'
                         onClick={() => {
                             handleEvaluateResults();
                         }}
                     >
                         {"Evaluar"}
-                    </button>
+                    </Button>
                 )}
 
-                <button
-                    className="btn btn-outline-primary p-3"
+                <Button
+                    className="p-3"
+                    variant="outline-primary"
                     onClick={() => {
                         nextSlide();
                         handleSumScore();
@@ -123,11 +127,11 @@ const SectionSpeaking = () => {
                     disabled={currentIndex >= sentencesStorage.length - 1 || porcentaje === 0}
                 >
                     {isMobile ? '' : 'Next'} <i className="bi bi-chevron-right"></i>
-                </button>
+                </Button>
 
-            </div>
+            </section>
 
-        </div>
+        </Container>
     );
 };
 

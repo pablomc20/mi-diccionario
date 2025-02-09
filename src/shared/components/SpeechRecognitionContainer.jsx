@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Card, Button } from "react-bootstrap";
 import RecognitionAudio from "./RecognitionAudio";
 import ListeningAudio from "./ListeningAudio";
 import TextReaderInput from "./TextReaderInput";
@@ -42,27 +43,26 @@ const SpeechRecognitionContainer = ({ originalPhrase, onSimilarityChange }) => {
     };
 
     return (
-        <div className="card mb-3" style={{
-            minHeight: "50vh"
-        }}>
-            <div className="px-3">
-                <h5 className="card-title">Original Phrase:</h5>
-                {/* <p className="card-text text-muted">{originalPhrase}</p> */}
-                <TextReaderInput key={1} text={originalPhrase} speechRate={1.0} visible={undefined} sentence={""} />
-            </div>
-            <div className="card-body">
-                <div className="mb-3">
-                    <h5 className="card-title">Recognized Text:</h5>
-                    <p className="card-text text-muted">{recognizedText}</p>
+        <Card className="mb-3" style={{ minHeight: "50vh" }}>
+            <Card.Body>
+                <div>
+                    <Card.Title>Original Phrase:</Card.Title>
+                    <TextReaderInput key={1} text={originalPhrase} speechRate={1.0} visible={undefined} sentence={""} />
                 </div>
+
                 <div className="mb-3">
-                    <h5 className={`card-title`}>Accuracy:</h5>
-                    <p className={`card-text ${currencyClass}`}>{similarity}%</p>
+                    <Card.Title>Recognized Text:</Card.Title>
+                    <Card.Text className="text-muted">{recognizedText}</Card.Text>
+                </div>
+
+                <div className="mb-3">
+                    <Card.Title>Accuracy:</Card.Title>
+                    <Card.Text className={currencyClass}>{similarity}%</Card.Text>
                 </div>
 
                 {highlightedText && (
                     <div className="mb-3">
-                        <h5 className="card-title">Corrections:</h5>
+                        <Card.Title>Corrections:</Card.Title>
                         <p>
                             {highlightedText.map((part, index) => (
                                 <span
@@ -90,10 +90,8 @@ const SpeechRecognitionContainer = ({ originalPhrase, onSimilarityChange }) => {
 
                     <ListeningAudio audioURL={audioURL} />
                 </div>
-
-
-            </div>
-        </div>
+            </Card.Body>
+        </Card>
     );
 };
 

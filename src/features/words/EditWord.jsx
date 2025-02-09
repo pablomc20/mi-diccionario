@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { Container, Form, Button } from "react-bootstrap";
 import { readById, updateWord } from './services/wordService'; // Importar funciones del DAO
 // import '../../styles/index.css'
 
@@ -49,6 +50,14 @@ const EditWord = () => {
         });
     };
 
+    // Manejar cambios en examples (campo textarea)
+    const handleSynonymsChange = (e) => {
+        setFormData({
+            ...formData,
+            synonyms: e.target.value, // Mantener como string hasta que se envíe
+        });
+    };
+
     // Manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,6 +65,7 @@ const EditWord = () => {
         const updatedWord = {
             ...formData,
             examples: formData.examples.split("\n"), // Convertir string en array antes de enviar
+            synonyms: formData.synonyms.split(","), // Convertir string en array antes de enviar
         };
 
         const success = await updateWord(id, updatedWord); // Actualizar la palabra
@@ -65,102 +75,97 @@ const EditWord = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <Container className="mt-5">
             <h1 className="text-center">Editar Palabra</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="english" className="form-label">Palabra en inglés</label>
-                    <input
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="english">
+                    <Form.Label>Palabra en inglés</Form.Label>
+                    <Form.Control
                         type="text"
-                        id="english"
                         name="english"
                         value={formData.english}
                         onChange={handleChange}
-                        className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="spanish" className="form-label">Traducción al español</label>
-                    <input
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="spanish">
+                    <Form.Label>Traducción al español</Form.Label>
+                    <Form.Control
                         type="text"
-                        id="spanish"
                         name="spanish"
                         value={formData.spanish}
                         onChange={handleChange}
-                        className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="concept" className="form-label">Concepto</label>
-                    <textarea
-                        id="concept"
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="concept">
+                    <Form.Label>Concepto</Form.Label>
+                    <Form.Control
+                        as="textarea"
                         name="concept"
                         value={formData.concept}
                         onChange={handleChange}
-                        className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="category" className="form-label">Categoría</label>
-                    <input
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="category">
+                    <Form.Label>Categoría</Form.Label>
+                    <Form.Control
                         type="text"
-                        id="category"
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
-                        className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="examples" className="form-label">Ejemplos (separados por comas)</label>
-                    <textarea
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="examples">
+                    <Form.Label>Ejemplos (separados por comas)</Form.Label>
+                    <Form.Control
+                        as="textarea"
                         rows={3}
-                        className="form-control"
                         name="examples"
                         value={formData.examples}
                         onChange={handleExamplesChange}
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="pronunciation" className="form-label">Pronunciación</label>
-                    <input
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="pronunciation">
+                    <Form.Label>Pronunciación</Form.Label>
+                    <Form.Control
                         type="text"
-                        id="pronunciation"
                         name="pronunciation"
                         value={formData.pronunciation}
                         onChange={handleChange}
-                        className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="audioUrl" className="form-label">URL del audio</label>
-                    <input
-                        type="text"
-                        id="audioUrl"
-                        name="audioUrl"
-                        value={formData.audioUrl}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
-                </div>
+                </Form.Group>
 
-                <div className="mb-3 d-flex justify-content-center gap-3">
-                    <button className="btn btn-outline-secondary" onClick={() => history.push(`/word/${id}`)}>
+                <Form.Group className="mb-3" controlId="audioUrl">
+                    <Form.Label>Sinonimos</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="audioUrl"
+                        value={formData.synonyms}
+                        onChange={handleSynonymsChange}
+                        required
+                    />
+                </Form.Group>
+
+                <div className="d-flex justify-content-center gap-3">
+                    <Button variant="outline-secondary" onClick={() => history.push(`/word/${id}`)}>
                         <i className="bi bi-arrow-return-left"></i>
-                    </button>
-                    <button type="submit" className="btn btn-outline-primary">
+                    </Button>
+                    <Button type="submit" variant="outline-primary">
                         <i className="bi bi-floppy-fill"></i>
-                    </button>
+                    </Button>
                 </div>
-            </form>
-        </div>
+            </Form>
+        </Container>
     );
 };
 

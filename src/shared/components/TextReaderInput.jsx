@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Form } from "react-bootstrap";
 
 const TextReaderInput = ({ text, speechRate, visible, sentence }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -27,32 +28,33 @@ const TextReaderInput = ({ text, speechRate, visible, sentence }) => {
     };
 
     return (
-        <div className="mb-3">
-            <span
-                className="form-control"
+        <section className="mb-3">
+            <Form.Control
+                as="span"
+                className="p-2"
                 style={{
                     border: isSpeaking ? "2px solid green" : "2px solid transparent",
-                    transition: "border 0.3s ease-in-out" // Agregar una animación suave
+                    transition: "border 0.3s ease-in-out",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                 }}
             >
                 {text}
-                <i
-                    style={{ cursor: 'pointer' }}
-                    onClick={speakText}
-                >
-                    {isSpeaking ? "  🔊" : "  🔈"}
+                <i onClick={speakText} style={{
+                    cursor: "pointer"
+                }}>
+                    {isSpeaking ? " 🔊" : " 🔈"}
                 </i>
-            </span>
+            </Form.Control>
 
             {/* Visualizar cuando se hace clic desde el padre */}
-            <section style={{
-                display: visible ? "block" : "none",
-                paddingLeft: "1rem"
-            }}
-            >
-                <p className="text-info">{sentence}</p>
-            </section>
-        </div>
+            {visible && (
+                <section className="mt-2 ps-3">
+                    <p className="text-info">{sentence}</p>
+                </section>
+            )}
+        </section>
     );
 };
 

@@ -1,4 +1,6 @@
-const WordPronunciation = ({wordObject}) => {
+import { Container, Button } from "react-bootstrap";
+
+const WordPronunciation = ({ wordObject }) => {
 
     const speakText = async (text) => {
         try {
@@ -9,16 +11,16 @@ const WordPronunciation = ({wordObject}) => {
     };
 
     return (
-        <div>
-            <h1 className="text-center">{wordObject.word}</h1>
-            <h4 className="text-center">{wordObject.translation}</h4>
-            <h4 className="text-secondary text-center ">{wordObject.pronunciation}</h4>
-            <div className="text-center pronunciation mb-4">
-                <button onClick={() => speakText(wordObject.word)} className="btn btn-success">
+        <Container className="text-center">
+            <h1>{wordObject.word}</h1>
+            <h4>{wordObject.translation}</h4>
+            <h4 className="text-muted">{wordObject.pronunciation}</h4>
+            <div className="pronunciation mb-4">
+                <Button variant="success" onClick={() => speakText(wordObject.word)}>
                     <i className="bi bi-volume-up-fill"></i>
-                </button>
+                </Button>
             </div>
-        </div>
+        </Container>
     );
 };
 

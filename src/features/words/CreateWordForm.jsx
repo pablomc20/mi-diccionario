@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form, InputGroup, Button } from "react-bootstrap";
 import { buildDataWord } from './services/wordOpnAIService';
 
 const CreateWordForm = ({ onAddWord }) => {
@@ -30,20 +31,19 @@ const CreateWordForm = ({ onAddWord }) => {
   }
 
   return (
-    <form id="wordForm" className="mb-4" onSubmit={handleSubmit}>
-      <div className="input-group">
-        <input
+    <Form id="wordForm" className="mb-4" onSubmit={handleSubmit}>
+      <InputGroup>
+        <Form.Control
           type="text"
           id="englishWord"
-          className="form-control"
           placeholder="Agregar palabra en inglés"
           value={word}
           onChange={(e) => setWord(e.target.value)}
           required
         />
-        <button type="submit" className="btn btn-primary">Guardar</button>
-      </div>
-    </form>
+        <Button type="submit" variant="primary">Guardar</Button>
+      </InputGroup>
+    </Form>
   );
 
 };
