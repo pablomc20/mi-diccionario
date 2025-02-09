@@ -4,7 +4,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 import TextReaderInput from '../../shared/components/TextReaderInput';
 import { deleteWord } from './services/wordService';
 import ConfirmDialog from "../../shared/components/ConfirmDialog";
-import '../../styles/index.css'
+// import '../../styles/index.css'
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -85,7 +85,6 @@ const WordDetails = ({ word }) => {
         const newSentences = [];
 
         word.examples.forEach(newSentence => {
-            console.log(newSentence);
             newSentences.push(newSentence); // Agregar nuevas sentencias al arreglo
         });
 
@@ -107,8 +106,8 @@ const WordDetails = ({ word }) => {
                 </div>
                 <ul className="mt-4">
                     {word.examples.map((example, index) => (
-                        <li>
-                            <TextReaderInput key={index} text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />
+                        <li key={index}>
+                            <TextReaderInput text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />
                         </li>
                     ))}
                 </ul>

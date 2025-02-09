@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { buildDataWord, retrievPronunciation } from './services/wordOpnAIService';
+import { buildDataWord } from './services/wordOpnAIService';
 
 const CreateWordForm = ({ onAddWord }) => {
   const [word, setWord] = useState("");
@@ -10,34 +10,20 @@ const CreateWordForm = ({ onAddWord }) => {
     // Generar ejemplos con Gemini
     const response = await generateDataWord(word);
 
-    const audio = await getPronunciation(word);
-    const audioUrl = audio ? buildUrlAudio(audio.audio) : '';
-
     const wordData = {
       english: word,
       spanish: response.translation,
       concept: response.concept,
       category: response.category,
       examples: response.examples,
-      pronunciation: audio.pronunciation,
-      audioUrl: audioUrl
+      pronunciation: response.pronunciation,
+      synonyms: response.synonyms
     };
 
     await onAddWord(wordData);
     setWord("");
 
   };
-
-  const buildUrlAudio = (audio) => {
-    if (!audio) {
-      return '';
-    }
-    return `${audio.charAt(0)}/${audio}`;
-  }
-
-  const getPronunciation = async (word) => {
-    return await retrievPronunciation(word);
-  }
 
   const generateDataWord = async (word) => {
     return await buildDataWord(word);

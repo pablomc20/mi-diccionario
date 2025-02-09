@@ -17,7 +17,6 @@ const useWordDetails = (id) => {
             try {
                 const data = await readById(id);
                 const array = data.examples || "[]"; // Manejo de valores nulos
-                console.log(data);
 
                 setWord({
                     word: data.english || "Word not available",

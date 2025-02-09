@@ -15,25 +15,6 @@ export const retrieveSentencesTraduction = async (sentences) => {
     }
 };
 
-const getFirstWord = (text) => {
-    const words = text.split(' ');
-    return words[0];
-}
-/**
- * Obtiene la pronunciación de una palabra.
- * @param {string} word - Palabra a buscar.
- * @returns {Promise<string>} - Pronunciación en formato string.
- */
-export const retrievPronunciation = async (word) => {
-    try {
-        const response = await apiJson.get(`/openai/pronunciations/${getFirstWord(word)}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error en retrievPronunciation:", error);
-        return "";
-    }
-};
-
 export const buildDataWord = async (word) => {
     try {
         const response = await apiJson.get(`/openai/vocabulary/${word}`);

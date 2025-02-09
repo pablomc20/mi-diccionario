@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { readById, updateWord } from './services/wordService'; // Importar funciones del DAO
-import '../../styles/index.css'
+// import '../../styles/index.css'
 
 const EditWord = () => {
     const { id } = useParams(); // Obtener el ID de la palabra desde la URL

@@ -23,7 +23,6 @@ const SpeechRecognitionContainer = ({ originalPhrase, onSimilarityChange }) => {
 
         if (similarity !== prevSimilarityRef.current) {
             prevSimilarityRef.current = similarity;
-            console.log('Porcentaje:', similarity);
             onSimilarityChange(similarity);
         }
     }, [similarity, onSimilarityChange]); // Ahora solo se ejecutará si similarity cambia
