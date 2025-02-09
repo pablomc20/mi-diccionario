@@ -14,7 +14,7 @@ const WordPronunciation = ({wordObject}) => {
             <h4 className="text-center">{wordObject.translation}</h4>
             <h4 className="text-secondary text-center ">{wordObject.pronunciation}</h4>
             <div className="text-center pronunciation mb-4">
-                <button onClick={() => speakText(wordObject.word)} className="btn-audio">
+                <button onClick={() => speakText(wordObject.word)} className="btn btn-success">
                     <i className="bi bi-volume-up-fill"></i>
                 </button>
             </div>

@@ -1,0 +1,76 @@
+$dark-bg: #161b22;
+$dark-text: #c9d1d9;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+$border-radius: 10px;
+$transition: background-color 0.3s ease;
+
+html[data-bs-theme="dark"] {
+    .card {
+        background-color: $dark-bg;
+        color: $dark-text;
+        border: none;
+        border-radius: $border-radius;
+        box-shadow: $shadow;
+        padding: 20px;
+        margin-top: 20px;
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+    }
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+// Estilos personalizados del tooltip
+.btn-tooltip {
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+        content: attr(data-title);
+        position: absolute;
+        bottom: 100%;
+        left: 110%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 82%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #333;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &:hover::before {
+        opacity: 1;
+        visibility: visible;
+    }
+}

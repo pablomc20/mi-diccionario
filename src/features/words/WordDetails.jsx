@@ -102,9 +102,9 @@ const WordDetails = ({ word }) => {
             <div className="card-body d-flex flex-column justify-content-between" style={{ height: '100%' }}>
                 <div>
                     <p>{word.concept}</p>
-                    <span className="badge bg-secondary">{word.category}</span>
+                    <span className="badge rounded-pill text-bg-light">{word.category}</span>
                 </div>
-                <ul className="mt-4">
+                <ul className="list-unstyled mt-4">
                     {word.examples.map((example, index) => (
                         <li key={index}>
                             <TextReaderInput text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />

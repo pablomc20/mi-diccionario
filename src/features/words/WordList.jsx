@@ -34,7 +34,7 @@ const WordList = ({ words, onDeleteWord }) => {
                             <h5 className="card-title">
                                 {word.english} → {word.spanish}
                             </h5>
-                            <h6 className="card-subtitle mb-2 text-secondary text-capitalize">
+                            <h6 className="card-subtitle mb-2 text-muted text-capitalize">
                                 {word.category}
                             </h6>
                             <p className="card-text">{word.concept}</p>

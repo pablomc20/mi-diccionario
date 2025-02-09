@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import CreateWordForm from '../features/words/CreateWordForm';
 import { readWords, createWord, deleteWord } from '../features/words/services/wordService';
 import WordList from '../features/words/WordList';
-import "../styles/index.css";
 
 const Vocabulary = () => {
   const [words, setWords] = useState([]);

@@ -49,10 +49,7 @@ const SectionSpeaking = () => {
                   url("/static/img/catjam-cat.gif")
                   left top
                   no-repeat
-                `,
-                customClass: {
-                    backdrop: 'custom-backdrop' // Clase personalizada para el backdrop
-                }
+                `
             });
             setCurrentIndex(0);
             setScore(0);
