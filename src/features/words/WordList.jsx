@@ -33,12 +33,12 @@ const WordList = ({ words, onDeleteWord }) => {
                     <Card key={word.id} className="mb-3" id={word.id}>
                         <Card.Body>
                             <Card.Title>
-                                {word.english} → {word.spanish}
+                                {word.word} → {word.translation}
                             </Card.Title>
                             <Card.Subtitle className="mb-2 text-muted text-capitalize">
-                                {word.category}
+                                {word.part_of_speech}
                             </Card.Subtitle>
-                            <Card.Text>{word.concept}</Card.Text>
+                            <Card.Text>{word.definition}</Card.Text>
                             <div className="d-flex justify-content-end">
                                 <Button
                                     variant="outline-primary"

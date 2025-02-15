@@ -6,27 +6,31 @@ const useWordDetails = (id) => {
         word: "",
         translation: "",
         pronunciation: "",
-        category: "",
-        concept: "",
+        part_of_speech  : "",
+        definition: "",
         examples: [],
-        audioUrl: "",
+        synonyms: [],
     });
 
     useEffect(() => {
         const fetchWordDetails = async () => {
             try {
                 const data = await readById(id);
-                const array = data.examples || "[]"; // Manejo de valores nulos
 
-                setWord({
-                    word: data.english || "Word not available",
-                    translation: data.spanish || "Translation not available",
+                const arrayExamples = data.examples || "[]"; // Manejo de valores nulos
+                const arraySynonyms = data.synonyms || "[]"; // Manejo de valores nulos
+
+                let wordJson = {
+                    word: data.word || "Word not available",
+                    translation: data.translation || "Translation not available",
                     pronunciation: data.pronunciation ? `(${data.pronunciation})` : "Pronunciation not available",
-                    category: data.category || "Category not available",
-                    concept: data.concept || "Concept not available",
-                    examples: array,
-                    audioUrl: data.audioUrl || "",
-                });
+                    part_of_speech: data.part_of_speech || "Category not available",
+                    definition: data.definition || "Concept not available",
+                    examples: arrayExamples,
+                    synonyms: arraySynonyms,
+                };
+
+                setWord(wordJson);
             } catch (error) {
                 console.error("Error al obtener los detalles de la palabra:", error);
             }

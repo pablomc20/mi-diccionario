@@ -16,11 +16,15 @@ const SectionPractice = () => {
         history.push(`/word/${newWordId.id}`);
     };
 
+    if (!word || !word.word) {
+        // Puedes mostrar un indicador de carga aquí
+        return <div>Cargando...</div>;
+    }
     return (
         <Container className="vh-100 d-flex flex-column justify-content-center p-0">
 
             <WordPronunciation wordObject={word} />
-            
+
             <WordDetails word={word} />
 
             <section className="d-flex justify-content-between pb-2 pt-4" style={{

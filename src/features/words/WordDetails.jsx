@@ -4,18 +4,20 @@ import useLocalStorage from './hooks/useLocalStorage';
 import TextReaderInput from '../../shared/components/TextReaderInput';
 import { deleteWord } from './services/wordService';
 import ConfirmDialog from "../../shared/components/ConfirmDialog";
-// import '../../styles/index.css'
+import MyVerticallyCenteredModal from '../../shared/components/MyVertycallyCenteredModal';
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { retrieveSentencesTraduction } from './services/wordOpnAIService';
 import { reloadFavoritesStorge, retrieveFavoritesStorage } from './hooks/favoritesStorage';
+import { Button } from 'react-bootstrap';
 
 const WordDetails = ({ word }) => {
     const [sentenceTraductions, setSentences] = useState([]);
     const [speechRate, setSpeechRate] = useState(1.0); // Valor inicial
     const [visible, setVisible] = useState(false);
     const [favorites, setFavorites] = useState([]); // Lista de favoritos
+    const [modalShow, setModalShow] = useState(false);
     const [sentencesPractice, setSentencesPractice, removeSentencesPractice] = useLocalStorage('sentences', [])
     const history = useHistory();
     const { id } = useParams();
@@ -28,14 +30,13 @@ const WordDetails = ({ word }) => {
         const examples = word.examples;
 
         const fetchInitialTraductions = async () => {
-
             const sentencesTransalated = await retrieveSentencesTraduction(examples);
-            setSentences(sentencesTransalated.translatedSentences)
+            setSentences(sentencesTransalated.translated)
         }
 
         fetchInitialTraductions();
 
-    }, [word.examples]);
+    }, []);
 
     // Cargar los favoritos desde localStorage
     useEffect(() => {
@@ -100,10 +101,13 @@ const WordDetails = ({ word }) => {
 
         <div className="card shadow-lg flex-grow-1">
             <div className="card-body d-flex flex-column justify-content-between" style={{ height: '100%' }}>
+                {/* SECTION DEFINITION */}
                 <div>
-                    <p>{word.concept}</p>
-                    <span className="badge rounded-pill text-bg-light">{word.category}</span>
+                    <p>{word.definition}</p>
+                    <span className="badge rounded-pill text-bg-light">{word.part_of_speech}</span>
                 </div>
+
+                {/* SECTION SENTENCES */}
                 <ul className="list-unstyled mt-4">
                     {word.examples.map((example, index) => (
                         <li key={index}>
@@ -111,6 +115,8 @@ const WordDetails = ({ word }) => {
                         </li>
                     ))}
                 </ul>
+
+                {/* SECTION BUTTON OTIONS */}
                 <div className="button-group d-flex justify-content-between mt-4">
                     <button
                         className={`btn bg-none col-2 ${visible ? "btn-info" : "btn-outline-info "}`}
@@ -132,9 +138,9 @@ const WordDetails = ({ word }) => {
                     >
                         <i className="bi bi-list-ol"></i>
                     </button>
-                    <button className="btn btn-outline-success bg-none col-2">
+                    <Button className="bg-none col-2" variant='outline-success' onClick={() => setModalShow(true)}>
                         <i className="bi bi-alphabet"></i>
-                    </button>
+                    </Button>
                     <button
                         className={`btn bg-none col-2 ${isFavorite ? "btn-danger" : "btn-outline-danger"}`}
                         onClick={() => toggleFavorite(id)}
@@ -145,7 +151,7 @@ const WordDetails = ({ word }) => {
                 </div>
 
                 {/* SI esta autorizado mostrar botones */}
-                {true &&
+                {false &&
                     <div className='d-flex justify-content-end '>
                         <button onClick={() => editWord(id)} className="btn btn-outline-primary col-2">
                             <i className="bi bi-gear-fill"></i>
@@ -155,6 +161,12 @@ const WordDetails = ({ word }) => {
                         </button>
                     </div>
                 }
+
+                <MyVerticallyCenteredModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    synonyms={word.synonyms.map(synonym => synonym.word)}
+                />
             </div>
         </div>
     );

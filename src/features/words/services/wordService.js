@@ -2,7 +2,7 @@ import apiJson from './apiJson'
 
 export const createWord = async (word) => {
     try {
-        const { data } = await apiJson.post("/api/words", word);
+        const { data } = await apiJson.post("/words", word);
         return data; // Devuelve la palabra agregada
     } catch (error) {
         console.error("Error en createWord:", error.response?.data || error.message);
@@ -12,8 +12,9 @@ export const createWord = async (word) => {
 
 export const readWords = async () => {
     try {
-        const { data } = await apiJson.get("/api/words");
-        return data;
+        const { data } = await apiJson.get("/words");
+
+        return data.data;
     } catch (error) {
         console.error("Error en readWords:", error.response?.data || error.message);
         return [];
@@ -22,8 +23,8 @@ export const readWords = async () => {
 
 export const updateWord = async (id, word) => {
     try {
-        const { data } = await apiJson.put(`/api/words/${id}`, word);
-        return data; // Devuelve la palabra actualizada
+        const { data } = await apiJson.put(`/words/${id}`, word);
+        return data;
     } catch (error) {
         console.error("Error en updateWord:", error.response?.data || error.message);
         return null;
@@ -32,7 +33,7 @@ export const updateWord = async (id, word) => {
 
 export const deleteWord = async (id) => {
     try {
-        await apiJson.delete(`/api/words/${id}`);
+        await apiJson.delete(`/words/${id}`);
         return true; // Indica éxito
     } catch (error) {
         console.error("Error en deleteWord:", error.response?.data || error.message);
@@ -42,8 +43,9 @@ export const deleteWord = async (id) => {
 
 export const readById = async (id) => {
     try {
-        const { data } = await apiJson.get(`/api/words/${id}`);
-        return data;
+        const { data } = await apiJson.get(`/words/${id}`);
+
+        return data.data;
     } catch (error) {
         console.error("Error en readById:", error.response?.data || error.message);
         return null;
@@ -52,8 +54,8 @@ export const readById = async (id) => {
 
 export const readWordsGroupedByIds = async () => {
     try {
-        const { data } = await apiJson.get("/api/words/grouped/id");
-        return data;
+        const { data } = await apiJson.get("/words/grouped/id");
+        return data.data;
     } catch (error) {
         console.error("Error en readWordsGroupedByIds:", error.response?.data || error.message);
         return [];

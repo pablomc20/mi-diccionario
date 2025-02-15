@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiOpenAI = axios.create({
     baseURL: process.env.REACT_APP_API_URL, // Usa la URL del entorno
-    timeout: 5000, // Tiempo de espera de 5 segundos
+    timeout: 8000, // Tiempo de espera de 5 segundos
     headers: { "Content-Type": "application/json" }
 });
 
