@@ -76,7 +76,7 @@ const SectionSpeaking = () => {
     };
 
     return (
-        <Container className="vh-100 d-flex flex-column justify-content-center p-4">
+        <Container className="vh-100 d-flex flex-column justify-content-center p-2">
             <h3 className={`text-center mb-4`}>{nameWord}</h3>
 
             {/* Contenedor de las frases */}

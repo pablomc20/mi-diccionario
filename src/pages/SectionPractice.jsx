@@ -21,7 +21,7 @@ const SectionPractice = () => {
         return <div>Cargando...</div>;
     }
     return (
-        <Container className="vh-100 d-flex flex-column justify-content-center p-0">
+        <Container className="vh-100 d-flex flex-column justify-content-center p-2">
 
             <WordPronunciation wordObject={word} />
 

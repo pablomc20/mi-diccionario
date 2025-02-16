@@ -99,7 +99,7 @@ const WordDetails = ({ word }) => {
 
     return (
 
-        <div className="card shadow-lg flex-grow-1">
+        <div className="card shadow-lg flex-grow-1 mt-0 p-0">
             <div className="card-body d-flex flex-column justify-content-between" style={{ height: '100%' }}>
                 {/* SECTION DEFINITION */}
                 <div>
@@ -108,7 +108,7 @@ const WordDetails = ({ word }) => {
                 </div>
 
                 {/* SECTION SENTENCES */}
-                <ul className="list-unstyled mt-4">
+                <ul className="list-unstyled mt-2">
                     {word.examples.map((example, index) => (
                         <li key={index}>
                             <TextReaderInput text={example} speechRate={speechRate} visible={visible} sentence={sentenceTraductions[index]} />

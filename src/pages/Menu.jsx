@@ -5,7 +5,7 @@ import ThemeToggle from '../features/theme/ThemeToggle';
 
 function Menu() {
     return (
-        <Container className="vh-100 d-flex flex-column justify-content-center text-center p-0">
+        <Container className="vh-100 d-flex flex-column justify-content-center text-center p-2">
             <h1>Vocabulario de Inglés</h1>
 
             <ThemeToggle />
