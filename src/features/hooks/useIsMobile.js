@@ -15,7 +15,7 @@ function useIsMobile(zise) {
 
         // Limpia el event listener cuando el componente se desmonte
         return () => window.removeEventListener('resize', checkIfMobile);
-    }, []);
+    }, [zise]);
 
     return isMobile; // Devuelve directamente el valor de isMobile
 }

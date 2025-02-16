@@ -30,7 +30,7 @@ const EditWord = () => {
             }
         };
         loadWord();
-    }, []);
+    }, [id]);
 
     // Manejar cambios en los campos del formulario
     const handleChange = (e) => {

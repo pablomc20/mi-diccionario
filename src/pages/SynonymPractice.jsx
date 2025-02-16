@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Container, Row, Col, Card, Button, Form, Alert } from "react-bootstrap"
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap"
 
 const questions = [
     {

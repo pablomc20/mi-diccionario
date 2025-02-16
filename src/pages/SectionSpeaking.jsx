@@ -17,7 +17,7 @@ const SectionSpeaking = () => {
     const params = new URLSearchParams(location.search);
     const nameWord = params.get("nameWord");
 
-    const [sentencesStorage, setSentences, removeSentences] = useLocalStorage('sentences', []);
+    const [sentencesStorage, , ] = useLocalStorage('sentences', []);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0); // Para almacenar el puntaje
@@ -45,7 +45,7 @@ const SectionSpeaking = () => {
                 color: "#716add",
                 background: "#fff url(/static/img/catjam-cat.png)",
                 backgroundSize: "400px",
-                backdrop: ` 
+                backdrop: `
                   rgba(0,0,123,0.4)
                   url("/static/img/catjam-cat.gif")
                   left top

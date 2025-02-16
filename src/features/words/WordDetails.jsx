@@ -18,7 +18,7 @@ const WordDetails = ({ word }) => {
     const [visible, setVisible] = useState(false);
     const [favorites, setFavorites] = useState([]); // Lista de favoritos
     const [modalShow, setModalShow] = useState(false);
-    const [sentencesPractice, setSentencesPractice, removeSentencesPractice] = useLocalStorage('sentences', [])
+    const [ , setSentencesPractice, ] = useLocalStorage('sentences', [])
     const history = useHistory();
     const { id } = useParams();
 
@@ -36,7 +36,7 @@ const WordDetails = ({ word }) => {
 
         fetchInitialTraductions();
 
-    }, []);
+    }, [word.examples]);
 
     // Cargar los favoritos desde localStorage
     useEffect(() => {
